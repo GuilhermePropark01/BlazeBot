@@ -35,15 +35,15 @@ class Telegram():
         aposta = 1
         return aposta
 
-    def confirmar_vitoria(self, total_de_jogos):
+    def confirmar_vitoria(self):
         mensagem = '🚨 GREEN ✅✅✅ 🚨'
         self.bot.send_message(chat_id=self.chat_id, text=mensagem, disable_web_page_preview=True)
 
-    def confirmar_vitoria_branco(self, total_de_jogos):
+    def confirmar_vitoria_branco(self):
         mensagem = '🚨 GREEN NO BRANCO ⚪! 14X 🚀🚀 ✅✅✅ 🚨'
         self.bot.send_message(chat_id=self.chat_id, text=mensagem, disable_web_page_preview=True)
 
-    def confirmar_derrota(self, total_de_jogos):
+    def confirmar_derrota(self,):
         mensagem = '🚨 ESSA NÃO DEU, VOLTE MAIS TARDE! ❌❌❌'
         self.bot.send_message(chat_id=self.chat_id, text=mensagem, disable_web_page_preview=True)
 
