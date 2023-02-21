@@ -35,6 +35,10 @@ class Telegram():
         mensagem = 'VAMOS PARA O 1º GALE 🍀 '
         self.bot.send_message(chat_id=self.chat_id, text=mensagem, disable_web_page_preview=True)
 
+    def confirmar_segundo_gale(self):
+        mensagem = 'VAMOS PARA O 2º GALE 🍀 '
+        self.bot.send_message(chat_id=self.chat_id, text=mensagem, disable_web_page_preview=True)
+
     def confirmar_derrota(self,):
         mensagem = 'ESSA NÃO DEU, VOLTE MAIS TARDE! ❌❌❌'
         self.bot.send_message(chat_id=self.chat_id, text=mensagem, disable_web_page_preview=True)

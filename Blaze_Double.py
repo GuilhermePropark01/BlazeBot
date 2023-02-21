@@ -12,6 +12,7 @@ vitoria_branco = 0
 derrota = 0
 realizou_jogada = 0
 confirmou = 0
+gale = 0
 
 while True:
     #A variável data retorna os resultados dos ultimos jogos. Já a variável dados apresenta o retorno da API para cada jogo que já ocorreu
@@ -26,9 +27,10 @@ while True:
             confirmou = a
             realizou_jogada = 1
         elif realizou_jogada == 1:
-            b = est.resultados()
+            b, d = est.resultados(gale)
             checkdata = data
             realizou_jogada = b
+            gale = d
         else:
             checkdata = data #Igualando as listas
             Banco_de_Dados(dados[0]['id'], dados[0]['created_at'], data[0], dados[0]['roll']).armazenar_dados() #Registrando informações no banco de dados Oracle
@@ -36,4 +38,4 @@ while True:
             confirmou = c
 
     #Tempo de espera até realizar a chamada da API novamente (10 segundos)
-    time.sleep(10)
+    time.sleep(1)

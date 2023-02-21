@@ -8,6 +8,7 @@ class Estrategia:
     def __init__(self, data):
         self.data = data
         self.registro_jogos = []
+        self.gale = 0
 
     def verificar_aviso(self):
 
@@ -63,7 +64,8 @@ class Estrategia:
 
             case _:
                 confirmou = 0
-                return confirmou
+                realizou_jogada = 0
+                return confirmou, realizou_jogada
 
     def verificar_entrada(self):
 
@@ -123,10 +125,14 @@ class Estrategia:
             case _:
                 msg = Telegram()
                 msg.confirmar_saida()
+                realizou_jogada = 0
+                confirmou = 0
                 if self.data not in self.registro_jogos:
                     self.registro_jogos.append(self.data)
+                time.sleep(40)
+                return realizou_jogada, confirmou
 
-    def resultados(self):
+    def resultados(self, gale):
 
         match self.data[0:6]:
             case ['Vermelho', 'Preto', 'Preto', 'Preto', 'Preto', 'Preto']:
@@ -135,28 +141,28 @@ class Estrategia:
                 realizou_jogada = 0
                 Banco_de_Dados('i','1','1','1').armazenar_estrategias('PPPPP')
                 self.registro_jogos.append(self.data)
-                return realizou_jogada
+                return realizou_jogada, gale
             case ['Preto', 'Vermelho', 'Vermelho', 'Vermelho', 'Vermelho', 'Vermelho']:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
                 Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('VVVVV')
                 self.registro_jogos.append(self.data)
-                return realizou_jogada
+                return realizou_jogada, gale
             case ['Vermelho', 'Preto', 'Vermelho', 'Preto', 'Vermelho', 'Preto']:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
                 Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('PVPVP')
                 self.registro_jogos.append(self.data)
-                return realizou_jogada
+                return realizou_jogada, gale
             case ['Preto', 'Vermelho', 'Preto', 'Vermelho', 'Preto', 'Vermelho']:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
                 Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('VPVPV')
                 self.registro_jogos.append(self.data)
-                return realizou_jogada
+                return realizou_jogada, gale
 
         match self.data[0:1]:
             case ['Branco']:
@@ -165,10 +171,37 @@ class Estrategia:
                 realizou_jogada = 0
                 self.registro_jogos.append(self.data)
                 return realizou_jogada
+
             case _:
-                msg = Telegram()
-                msg.confirmar_derrota()
-                realizou_jogada = 0
-                self.registro_jogos.append(self.data)
-                time.sleep(60)
-                return realizou_jogada
+                if gale == 0:
+                    realizou_jogada = self.primeiro_gale()
+                    self.registro_jogos.append(self.data)
+                    gale = 1
+                    return realizou_jogada, gale
+                elif gale == 1:
+                    realizou_jogada = self.segundo_gale()
+                    self.registro_jogos.append(self.data)
+                    gale = 3
+                    return realizou_jogada, gale
+                else:
+                    msg = Telegram()
+                    msg.confirmar_derrota()
+                    realizou_jogada = 0
+                    gale = 0
+                    self.registro_jogos.append(self.data)
+                    time.sleep(60)
+                    return realizou_jogada, gale
+
+    def primeiro_gale(self):
+        msg = Telegram()
+        msg.confirmar_primeiro_gale()
+        realizou_jogada = 1
+        self.registro_jogos.append(self.data)
+        return realizou_jogada
+
+    def segundo_gale(self):
+        msg = Telegram()
+        msg.confirmar_segundo_gale()
+        realizou_jogada = 1
+        self.registro_jogos.append(self.data)
+        return realizou_jogada
