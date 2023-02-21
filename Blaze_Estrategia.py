@@ -8,7 +8,6 @@ class Estrategia:
     def __init__(self, data):
         self.data = data
         self.registro_jogos = []
-        self.gale = 0
 
     def verificar_aviso(self):
 
@@ -73,7 +72,8 @@ class Estrategia:
             case ['Preto', 'Preto', 'Preto', 'Preto', 'Preto']:
                 msg = Telegram()
                 percentual = Analise('Vermelho', 'Vermelho').analisar_dados()
-                if percentual >= 00.0:
+                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('PPPPP')
+                if percentual >= 43.0:
                     msg.confirmar_entrada('🔴', percentual)
                     realizou_jogada = 1
                     confirmou = 0
@@ -86,7 +86,8 @@ class Estrategia:
             case ['Vermelho', 'Vermelho', 'Vermelho', 'Vermelho', 'Vermelho']:
                 msg = Telegram()
                 percentual = Analise('Preto', 'Vermelho').analisar_dados()
-                if percentual >= 0.0:
+                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('VVVVV')
+                if percentual >= 43.0:
                     msg.confirmar_entrada('⚫', percentual)
                     realizou_jogada = 1
                     confirmou = 0
@@ -99,7 +100,8 @@ class Estrategia:
             case ['Preto', 'Vermelho', 'Preto', 'Vermelho', 'Preto']:
                 msg = Telegram()
                 percentual = Analise('Vermelho', 'Vermelho').analisar_dados()
-                if percentual >= 0.0:
+                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('PVPVP')
+                if percentual >= 43.0:
                     msg.confirmar_entrada('🔴', percentual)
                     realizou_jogada = 1
                     confirmou = 0
@@ -112,7 +114,8 @@ class Estrategia:
             case ['Vermelho', 'Preto', 'Vermelho', 'Preto', 'Vermelho']:
                 msg = Telegram()
                 percentual = Analise('Preto', 'Vermelho').analisar_dados()
-                if  percentual >= 0.0:
+                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('VPVPV')
+                if  percentual >= 43.0:
                     msg.confirmar_entrada('⚫', percentual)
                     realizou_jogada = 1
                     confirmou = 0
@@ -129,7 +132,6 @@ class Estrategia:
                 confirmou = 0
                 if self.data not in self.registro_jogos:
                     self.registro_jogos.append(self.data)
-                time.sleep(40)
                 return realizou_jogada, confirmou
 
     def resultados(self, gale):
@@ -139,28 +141,27 @@ class Estrategia:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
-                Banco_de_Dados('i','1','1','1').armazenar_estrategias('PPPPP')
                 self.registro_jogos.append(self.data)
                 return realizou_jogada, gale
+
             case ['Preto', 'Vermelho', 'Vermelho', 'Vermelho', 'Vermelho', 'Vermelho']:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
-                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('VVVVV')
                 self.registro_jogos.append(self.data)
                 return realizou_jogada, gale
+
             case ['Vermelho', 'Preto', 'Vermelho', 'Preto', 'Vermelho', 'Preto']:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
-                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('PVPVP')
                 self.registro_jogos.append(self.data)
                 return realizou_jogada, gale
+
             case ['Preto', 'Vermelho', 'Preto', 'Vermelho', 'Preto', 'Vermelho']:
                 msg = Telegram()
                 msg.confirmar_vitoria()
                 realizou_jogada = 0
-                Banco_de_Dados('i', '1', '1', '1').armazenar_estrategias('VPVPV')
                 self.registro_jogos.append(self.data)
                 return realizou_jogada, gale
 
